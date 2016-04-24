@@ -6,6 +6,7 @@ import sass from 'gulp-sass';
 import cssnano from 'gulp-cssnano';
 import sourcemaps from 'gulp-sourcemaps';
 import del from 'del';
+import webpack from 'webpack-stream';
 // import concat from 'gulp-concat';
 // import uglify from 'gulp-uglify';
 // import rename from 'gulp-rename';
@@ -53,8 +54,9 @@ const styles = () => {
 export { styles };
 
 const scripts = () => {
-  return gulp.src('./src/sass/**/*.scss')
-    .pipe(gulp.dest('./dist/styles'));
+  return gulp.src('./src/scripts/entry.js')
+    .pipe(webpack(require('./webpack.config.js')))
+    .pipe(gulp.dest('./dist/scripts'));
 };
 export { scripts };
 
