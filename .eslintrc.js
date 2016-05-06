@@ -5,9 +5,9 @@ module.exports = {
     },
     "globals": {},
     "rules": {
-      'max-len': [1, 100, 4, {
-        ignoreComments: true,
-        ignoreUrls: true
-      }]
+      // 'max-len': [1, 100, 4, {
+      //   ignoreComments: true,
+      //   ignoreUrls: true
+      // }]
     }
 };

@@ -1,66 +1,41 @@
-'use strict';
-
 import gulp from 'gulp';
-import babel from 'gulp-babel';
-import sass from 'gulp-sass';
-import cssnano from 'gulp-cssnano';
-import sourcemaps from 'gulp-sourcemaps';
 import del from 'del';
-import webpack from 'webpack-stream';
-// import concat from 'gulp-concat';
-// import uglify from 'gulp-uglify';
+import {config, env} from './gulp/gulp.config';
+import styles from './gulp/styles';
+import scripts from './gulp/scripts';
+import * as gutil from 'gulp-util';
 // import rename from 'gulp-rename';
 // import cleanCSS from 'gulp-clean-css';
 
-const paths = {
-  styles: {
-    src: 'src/styles/**/*.less',
-    dest: 'assets/styles/'
-  },
-  scripts: {
-    src: 'src/scripts/**/*.js',
-    dest: 'assets/scripts/'
-  }
-};
+const setProd = cb => {
+  env.env = 'PROD';
 
-var AUTOPREFIXER = [
-  'last 2 versions',
-  'safari >= 7',
-  'ie >= 9',
-  'ff >= 30',
-  'ios 6',
-  'android 4'
-];
+  gutil.log(
+      'Compiling APP in',
+      gutil.colors.magenta(env.env),
+      'mode'
+    );
+
+  return cb();
+};
 
 const clean = () => {
-  return del(['dist']);
-}
-export { clean };
+  gutil.log('Cleaning workspace directory');
 
-const styles = () => {
-  return gulp.src('./src/sass/**/*.scss')
-    .pipe(sourcemaps.init())
-    .pipe(sass({
-      outputStyle: 'compressed'
-    }).on('error', sass.logError))
-    .pipe(cssnano({
-      discardComments: {removeAll: true},
-      autoprefixer: {browsers: AUTOPREFIXER, add: true},
-      safe: true
-    }))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./dist/styles'));
+  return del([
+    config.dist
+  ]);
 };
-export { styles };
 
-const scripts = () => {
-  return gulp.src('./src/scripts/entry.js')
-    .pipe(webpack(require('./webpack.config.js')))
-    .pipe(gulp.dest('./dist/scripts'));
+const build = gulp.series(setProd, clean, gulp.parallel(styles, scripts));
+const serve = gulp.series(clean, gulp.parallel(styles, scripts));
+
+export {
+  clean,
+  styles,
+  scripts,
+  build,
+  serve
 };
-export { scripts };
 
-const build = gulp.series(clean, gulp.parallel(styles, scripts));
-
-export { build };
 export default build;
