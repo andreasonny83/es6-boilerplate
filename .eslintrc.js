@@ -4,10 +4,5 @@ module.exports = {
       browser: true
     },
     "globals": {},
-    "rules": {
-      // 'max-len': [1, 100, 4, {
-      //   ignoreComments: true,
-      //   ignoreUrls: true
-      // }]
-    }
+    "rules": {}
 };
