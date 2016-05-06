@@ -4,8 +4,6 @@ import {config, env} from './gulp/gulp.config';
 import styles from './gulp/styles';
 import scripts from './gulp/scripts';
 import * as gutil from 'gulp-util';
-// import rename from 'gulp-rename';
-// import cleanCSS from 'gulp-clean-css';
 
 const setProd = cb => {
   env.env = 'PROD';

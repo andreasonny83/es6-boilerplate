@@ -3,6 +3,11 @@ import {config} from './gulp.config';
 import sass from 'gulp-sass';
 import cssnano from 'gulp-cssnano';
 import sourcemaps from 'gulp-sourcemaps';
+// import cleanCSS from 'gulp-clean-css';
+
+/**
+ * @todo: file version, production vs dev version
+ */
 
 const styles = () => {
   return gulp.src(config.styles.src)

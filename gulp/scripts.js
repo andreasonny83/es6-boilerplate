@@ -3,6 +3,10 @@ import {config, env} from './gulp.config';
 import webpackStream from 'webpack-stream';
 import webpack from 'webpack';
 
+/**
+ * @todo: file version, js linting before running webpack
+ */
+
 const scripts = () => {
   return gulp.src(config.scripts.src)
     .pipe(webpackStream({
